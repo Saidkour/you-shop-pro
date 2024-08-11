@@ -12,7 +12,6 @@ exports.getAllOrders = async (req, res, next) => {
     next(err);
   }
 };
-
 exports.addOrder = async (req, res, next) => {
   try {
     const orderToAdd = {

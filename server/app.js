@@ -13,12 +13,9 @@ app.use("/orders", orderRouter);
 
 
 
-
 app.use((err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
-
   err.status = err.status || "error";
-
   if (process.env.ENV === "developpment") {
     res.status(err.statusCode).json({
       status: err.status,

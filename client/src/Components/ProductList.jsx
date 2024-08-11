@@ -14,7 +14,6 @@ export default function ProductList({ list }) {
     </ul>
   );
 }
-
 const ItemProduct = ({ product: { id, img, name, price, category } }) => {
   const dispatch = useDispatch();
   const handleAddToCart = () => {

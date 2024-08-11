@@ -6,11 +6,9 @@ exports.getProducts = async (req, res, next) => {
   try {
     const fields = req.query.fields?.split(",").join(" ") ?? {};
     console.log(req.query);
-
     const excludeKeys = ["sort", "fields", "limit", "page"];
     let queryString = { ...req.query };
     excludeKeys.map((e) => delete queryString[e]);
-
     queryString = JSON.parse(
       JSON.stringify(queryString)
         .replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`)
@@ -22,7 +20,6 @@ exports.getProducts = async (req, res, next) => {
 
     let query;
     let count;
-
     if (req.query.sort === "random") {
       query = Product.aggregate([
         {
@@ -46,12 +43,10 @@ exports.getProducts = async (req, res, next) => {
     } else {
       query = Product.find(queryString).select(fields).select("-__v");
       count = await Product.find(queryString).countDocuments();
-
       if (req.query.sort) {
         const sort = req.query.sort.split(",").join(" ");
         query = query.sort(sort);
       }
-
       if (req.query.page) {
         query = query.skip(req.query.page - 1 * req.query.limit);
       }
@@ -62,8 +57,7 @@ exports.getProducts = async (req, res, next) => {
     }
 
     let products = await query;
-    // console.log(products);
-
+    console.log(products);
     res.json({
       status: "success",
       length: count,
@@ -80,7 +74,7 @@ exports.addManyProducts = async (req, res, next) => {
       throw new Error("Products data is not an array");
     }
 
-    const result = await productArray.map(async (p) => {
+    const result =  productArray.map(async (p) => {
       return await Product.create(p);
     });
 
