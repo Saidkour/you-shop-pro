@@ -68,21 +68,21 @@ export default function CardSide() {
               <Link
                 onClick={toggleCArd}
                 to={"ViewCarT"}
-                className="w-full mb-4 bg-primary text-semi-black flex justify-center p-3 text-sm font-semibold tracking-widest hover:bg-semi-gray hover:text-white hover:translate-x-2 hover:duration-500 hover:rotate-1"
+                className="w-full mb-4 bg-primary text-semi-black flex justify-center p-3 text-sm font-semibold tracking-widest hover:bg-semi-gray hover:text-white hover:duration-500 "
               >
                 VIEW CART
               </Link>
               <Link
                 onClick={toggleCArd}
                 to={"/checkout"}
-                className="w-full bg-primary text-semi-black flex justify-center p-3 text-sm font-semibold tracking-widest hover:bg-semi-gray hover:text-white hover:translate-x-2 hover:duration-500 hover:rotate-1"
+                className="w-full bg-primary text-semi-black flex justify-center p-3 text-sm font-semibold tracking-widest hover:bg-semi-gray hover:text-white  hover:duration-500 "
               >
                 CHECKOUT
               </Link>
             </div>
           </div>
         ) : (
-          <button className=" absolute left-6 bottom-4 right-6 bg-primary flex justify-center p-3 text-sm font-semibold tracking-widest hover:bg-semi-gray hover:text-white hover:translate-x-2 hover:duration-500 hover:rotate-1">
+          <button className=" absolute left-6 bottom-4 right-6 bg-primary flex justify-center p-3 text-sm font-semibold tracking-widest hover:bg-semi-gray hover:text-white  hover:duration-500 ">
             <Link onClick={toggleCArd} to={"/products"}>
               CONTINUE SHOPPING
             </Link>

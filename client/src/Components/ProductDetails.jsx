@@ -126,7 +126,7 @@ function ProductDetails() {
             </div>
             <div className="mb-3">
               <span className="text-[22px] font-bold opacity-[0.9]">
-                ${details?.price}
+                MAD {details?.price}
               </span>
               <span className="text-[18px] opacity-[0.9] ml-1">
                 & free shipping
