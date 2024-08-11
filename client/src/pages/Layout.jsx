@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import NavBar from "../Components/NavBar";
 import CardSide from "../Components/CardSide";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,6 +8,14 @@ import { orders, toggleSideCard } from "../redux/selectors";
 import { useEffect, useRef } from "react";
 
 const Layout = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    console.log("patnamechange", pathname)
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }, [pathname]);
   const dispatch = useDispatch();
   const showSideCard = useSelector(toggleSideCard);
 
