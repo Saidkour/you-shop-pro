@@ -51,6 +51,7 @@ export default function AddProduct() {
     const valueDesc = description.current.value;
     if (!valueName || !valueDesc) {
       setErrorCateg(true);
+      setIsCategorySent(false)
     } else {
       try {
         await PostCategorie(valueName, valueDesc);
@@ -68,54 +69,53 @@ export default function AddProduct() {
   
   const handleAddProduct = async (e) => {
     e.preventDefault();
-  
-    const data = {
-      nameV: name.current.value.trim(),
-      imageV: image.current.value.trim(),
-      priceV: price.current.value,
-      descV: desc.current.value.trim(),
-      featuresV: features.current.value.trim(),
-      category_idV: category_id.current.value,
-    };
+    setIsProductSent(false)
+    const formData = new FormData();
+    formData.append('name', name.current.value.trim());
+    formData.append('image', image.current.files[0]); // Important: Get the file object
+    formData.append('price', price.current.value.trim());
+    formData.append('description', desc.current.value.trim());
+    formData.append('features', features.current.value.trim());
+    formData.append('category_id', category_id.current.value);
   
     let isValid = true;
   
-    if (!data.nameV) {
+    if (!formData.get('name')) {
       setErrorName(true);
       isValid = false;
     } else {
       setErrorName(false);
     }
   
-    if (!data.imageV) {
+    if (!formData.get('image')) {
       setErrorImage(true);
       isValid = false;
     } else {
       setErrorImage(false);
     }
   
-    if (!data.priceV || isNaN(data.priceV)) {
+    if (!formData.get('price') || isNaN(formData.get('price'))) {
       setErrorPrice(true);
       isValid = false;
     } else {
       setErrorPrice(false);
     }
   
-    if (!data.descV) {
+    if (!formData.get('description')) {
       setErrorDesc(true);
       isValid = false;
     } else {
       setErrorDesc(false);
     }
   
-    if (!data.featuresV) {
+    if (!formData.get('features')) {
       setErrorFeature(true);
       isValid = false;
     } else {
       setErrorFeature(false);
     }
   
-    if (!data.category_idV) {
+    if (!formData.get('category_id')) {
       setErrorCategory(true);
       isValid = false;
     } else {
@@ -124,17 +124,10 @@ export default function AddProduct() {
   
     if (isValid) {
       try {
-        await PostProducts(
-          data.nameV,
-          data.imageV,
-          data.priceV,
-          data.descV,
-          data.featuresV,
-          data.category_idV
-        );
-
+        await PostProducts(formData); 
         setIsProductSent(true);
-
+  
+        // Reset form
         name.current.value = "";
         image.current.value = "";
         price.current.value = "";
@@ -147,6 +140,7 @@ export default function AddProduct() {
       }
     }
   };
+  
   
 
   // GetProducts()
@@ -165,7 +159,7 @@ export default function AddProduct() {
           {isProductSent ? <div className="bg-green-100 px-6 py-4 w-full mb-6 rounded flex items-center border border-green-200"> <span className="text-green-600 tracking-wide mr-2">Product is added succesfully</span>  <span ><MdDone className="fill-green-600 stroke-green-600 text-2xl"/>  </span>   </div> : ''}
 
         <div className="bg-gray-100 rounded-[10px] xl:px-14 px-5 py-10 shadow">
-          <form action="" className=" space-y-4 ">
+          <form action="" className=" space-y-4" encType="multipart/form-data">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-1">
               <div>
                 <label className="" htmlFor="name">
@@ -191,8 +185,8 @@ export default function AddProduct() {
                 <input
                   className={
                     ErrorImage
-                      ? "w-full outline-yellow-300 mt-2 rounded-lg border border-red-200 p-3 text-sm"
-                      : "w-full outline-yellow-300 mt-2 rounded-lg border border-gray-200 p-3 text-sm"
+                      ? "w-full outline-yellow-300 mt-2 bg-white rounded-lg border border-red-200 p-3 text-sm"
+                      : "w-full outline-yellow-300 mt-2 bg-white rounded-lg border border-gray-200 p-3 text-sm"
                   }
                   placeholder="image"
                   type="file"
@@ -267,7 +261,7 @@ export default function AddProduct() {
                 <label htmlFor="features">features</label>
                 {ErrorFeature ? <span className="text-red-400 ml-2">*</span> : ""}
 
-                <input
+                <textarea
                   className={ErrorFeature ? "w-full outline-yellow-300 mt-2 rounded-lg border border-red-200 p-3 text-sm" : "w-full outline-yellow-300 mt-2 rounded-lg border border-gray-200 p-3 text-sm"}
                   placeholder="features"
                   type="text"
@@ -326,7 +320,7 @@ export default function AddProduct() {
               </label>
               {ErrorCateg ? <span className="text-red-400 ml-2">*</span> : ""}
 
-              <input
+              <textarea
                 className={
                   ErrorCateg
                     ? "w-full outline-yellow-300 mt-2 rounded-lg border border-red-200 p-3 text-sm"

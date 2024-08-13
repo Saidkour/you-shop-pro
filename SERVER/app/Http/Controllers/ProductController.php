@@ -12,10 +12,20 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $products = Product::all();
-        return response()->json($products, 201);
+        $query = Product::with('category');
+
+        if($request->has('category_id')){
+            $query->where('category_id', $request->input('category_id'));
+        }
+
+        if($request->has('price')){
+            $query->where('price', $request->input('price'));
+        }
+
+        $products = $query->get();
+        return response()->json($products);
     }
 
     /**
@@ -25,17 +35,29 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'image' => 'required|string', 
+            'image' => 'required|image',
             'description' => 'required|string',
-            'features' => 'required|string', 
-            'price' => 'required|numeric|min:0|max:999999.99', 
-            'category_id' => 'required|exists:categories,id', 
+            'features' => 'required|string',
+            'price' => 'required|numeric|min:0|max:999999.99',
+            'category_id' => 'required|exists:categories,id',
         ]);
 
-        $product = Product::create($request->all());
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('images', 'public');
+            $product = Product::create([
+                'name' => $request->name,
+                'image' => 'storage/' . $path, 
+                'description' => $request->description,
+                'features' => $request->features,
+                'price' => $request->price,
+                'category_id' => $request->category_id,
+            ]);
+            
+        }
+        
         return response()->json([
             'message' => 'The product was added successfully',
-            'product' => $product 
+            'product' => $product
         ], 201);
     }
 
@@ -45,12 +67,8 @@ class ProductController extends Controller
     public function show(string $id)
     {
         $product = Product::findOrFail($id);
-        // $category = Category::findOrFail($product->category_id);
-        
-        return response()->json([
-            "product" => $product,
-            // "category" => $category,
-        ], 201);
+
+        return response()->json($product);
     }
 
     /**
@@ -62,17 +80,17 @@ class ProductController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'image' => 'required|string', 
+            'image' => 'required|string',
             'description' => 'required|string',
-            'features' => 'required|string', 
-            'price' => 'required|numeric|min:0|max:999999.99', 
-            'category_id' => 'required|exists:categories,id', 
+            'features' => 'required|string',
+            'price' => 'required|numeric|min:0|max:999999.99',
+            'category_id' => 'required|exists:categories,id',
         ]);
 
         $product->update($request->all());
 
         return response()->json([
-            'message' => 'Product updated successfully', 
+            'message' => 'Product updated successfully',
             'data' => $product
         ], 200);
     }
@@ -90,4 +108,5 @@ class ProductController extends Controller
 
         ]);
     }
+
 }

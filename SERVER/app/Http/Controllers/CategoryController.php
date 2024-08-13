@@ -13,7 +13,8 @@ class CategoryController extends Controller
      */
     public function index(): JsonResponse
     {
-        $categories = Category::all();
+        $query = Category::with('product');
+        $categories = $query->get();
         return response()->json($categories, 200);
     }
 
