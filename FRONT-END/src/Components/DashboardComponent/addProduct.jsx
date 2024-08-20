@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { TbLayoutGridAdd } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import { GetCategorie, PostCategorie } from "../../API/categories";
 import { SETCATEGORIES } from "../../REDUX/ProductReducer/ActionPr";
 import { PostProducts } from "../../API/products";
-import { MdDone } from "react-icons/md";
-
+import { MdAddCircleOutline, MdDone } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 export default function AddProduct() {
   const [ErrorCateg, setErrorCateg] = useState(false);
@@ -16,8 +15,10 @@ export default function AddProduct() {
   const [ErrorFeature, setErrorFeature] = useState(false);
   const [ErrorCategory, setErrorCategory] = useState(false);
 
-  const [isProductSent ,setIsProductSent] = useState(false)
-  const [isCategorySent ,setIsCategorySent] = useState(false)
+  const [isProductSent, setIsProductSent] = useState(false);
+  const [isCategorySent, setIsCategorySent] = useState(false);
+  const navigate = useNavigate();
+
 
   const newCategorie = useRef();
   const description = useRef();
@@ -30,7 +31,7 @@ export default function AddProduct() {
 
   const dispatch = useDispatch();
   const categories = useSelector((store) => store.products.categories);
-  console.log("categories", categories);
+  console.log("categories from store", categories);
 
   const fetchCategories = async () => {
     try {
@@ -51,7 +52,7 @@ export default function AddProduct() {
     const valueDesc = description.current.value;
     if (!valueName || !valueDesc) {
       setErrorCateg(true);
-      setIsCategorySent(false)
+      setIsCategorySent(false);
     } else {
       try {
         await PostCategorie(valueName, valueDesc);
@@ -60,88 +61,90 @@ export default function AddProduct() {
         description.current.value = "";
         setErrorCateg(false);
         fetchCategories();
+        setTimeout(() => {
+          navigate("/dashboard/categories");
+        }, 2000);
       } catch (error) {
         console.error("Error posting category:", error);
       }
     }
   };
 
-  
   const handleAddProduct = async (e) => {
     e.preventDefault();
-    setIsProductSent(false)
+    setIsProductSent(false);
     const formData = new FormData();
-    formData.append('name', name.current.value.trim());
-    formData.append('image', image.current.files[0]); // Important: Get the file object
-    formData.append('price', price.current.value.trim());
-    formData.append('description', desc.current.value.trim());
-    formData.append('features', features.current.value.trim());
-    formData.append('category_id', category_id.current.value);
-  
+    formData.append("name", name.current.value.trim());
+    formData.append("image", image.current.files[0]);
+    formData.append("price", price.current.value.trim());
+    formData.append("description", desc.current.value.trim());
+    formData.append("features", features.current.value.trim());
+    formData.append("category_id", category_id.current.value);
+
     let isValid = true;
-  
-    if (!formData.get('name')) {
+
+    if (!formData.get("name")) {
       setErrorName(true);
       isValid = false;
     } else {
       setErrorName(false);
     }
-  
-    if (!formData.get('image')) {
+
+    if (!formData.get("image")) {
       setErrorImage(true);
       isValid = false;
     } else {
       setErrorImage(false);
     }
-  
-    if (!formData.get('price') || isNaN(formData.get('price'))) {
+
+    if (!formData.get("price") || isNaN(formData.get("price"))) {
       setErrorPrice(true);
       isValid = false;
     } else {
       setErrorPrice(false);
     }
-  
-    if (!formData.get('description')) {
+
+    if (!formData.get("description")) {
       setErrorDesc(true);
       isValid = false;
     } else {
       setErrorDesc(false);
     }
-  
-    if (!formData.get('features')) {
+
+    if (!formData.get("features")) {
       setErrorFeature(true);
       isValid = false;
     } else {
       setErrorFeature(false);
     }
-  
-    if (!formData.get('category_id')) {
+
+    if (!formData.get("category_id")) {
       setErrorCategory(true);
       isValid = false;
     } else {
       setErrorCategory(false);
     }
-  
+
     if (isValid) {
       try {
-        await PostProducts(formData); 
-        setIsProductSent(true);
-  
-        // Reset form
+        await PostProducts(formData);
         name.current.value = "";
         image.current.value = "";
         price.current.value = "";
         desc.current.value = "";
         features.current.value = "";
         category_id.current.value = "";
-  
+
+        setIsProductSent(true);
+
+        setTimeout(() => {
+          navigate("/dashboard/productsList");
+        }, 2000);
       } catch (error) {
         console.error("Error posting product:", error);
       }
     }
   };
-  
-  
 
   // GetProducts()
 
@@ -152,11 +155,23 @@ export default function AddProduct() {
           <h1 className=" flex items-center text-2xl font-semibold">
             Ajouter des produits{" "}
             <span>
-              <TbLayoutGridAdd className="ml-3" />{" "}
+              <MdAddCircleOutline className="ml-3" />{" "}
             </span>
           </h1>
         </div>
-          {isProductSent ? <div className="bg-green-100 px-6 py-4 w-full mb-6 rounded flex items-center border border-green-200"> <span className="text-green-600 tracking-wide mr-2">Product is added succesfully</span>  <span ><MdDone className="fill-green-600 stroke-green-600 text-2xl"/>  </span>   </div> : ''}
+        {isProductSent ? (
+          <div className="bg-green-100 px-6 py-4 w-full mb-6 rounded flex items-center border border-green-200">
+            {" "}
+            <span className="text-green-600 tracking-wide mr-2">
+              Product is added succesfully
+            </span>{" "}
+            <span>
+              <MdDone className="fill-green-600 stroke-green-600 text-2xl" />{" "}
+            </span>{" "}
+          </div>
+        ) : (
+          ""
+        )}
 
         <div className="bg-gray-100 rounded-[10px] xl:px-14 px-5 py-10 shadow">
           <form action="" className=" space-y-4" encType="multipart/form-data">
@@ -213,12 +228,19 @@ export default function AddProduct() {
               </div>
               <div className="flex flex-col">
                 <div>
-                <label htmlFor="categorie">categorie</label>
-                {ErrorCategory ? <span className="text-red-400 ml-2">*</span> : ""}
-
+                  <label htmlFor="categorie">categorie</label>
+                  {ErrorCategory ? (
+                    <span className="text-red-400 ml-2">*</span>
+                  ) : (
+                    ""
+                  )}
                 </div>
                 <select
-                  className= {ErrorCategory ? "p-3 outline-yellow-300 mt-2 border border-red-200 rounded" : "p-3 border border-gray-200 outline-yellow-300 mt-2 rounded"}
+                  className={
+                    ErrorCategory
+                      ? "p-3 outline-yellow-300 mt-2 border border-red-200 rounded"
+                      : "p-3 border border-gray-200 outline-yellow-300 mt-2 rounded"
+                  }
                   name="categorie"
                   id="categorie"
                   ref={category_id}
@@ -241,13 +263,21 @@ export default function AddProduct() {
 
             <div>
               <div className="flex flex-col">
-               <div>
-                <label htmlFor="description">description</label>
-                {ErrorDesc ? <span className="text-red-400 ml-2">*</span> : ""}
-               </div>
+                <div>
+                  <label htmlFor="description">description</label>
+                  {ErrorDesc ? (
+                    <span className="text-red-400 ml-2">*</span>
+                  ) : (
+                    ""
+                  )}
+                </div>
 
                 <textarea
-                  className= {ErrorDesc? "p-3 outline-yellow-300 mt-2 border border-red-200 rounded" : "p-3 border border-gray-200 outline-yellow-300 mt-2 rounded"}
+                  className={
+                    ErrorDesc
+                      ? "p-3 outline-yellow-300 mt-2 border border-red-200 rounded"
+                      : "p-3 border border-gray-200 outline-yellow-300 mt-2 rounded"
+                  }
                   placeholder="description"
                   name="description"
                   id="description"
@@ -259,10 +289,18 @@ export default function AddProduct() {
             <div>
               <div>
                 <label htmlFor="features">features</label>
-                {ErrorFeature ? <span className="text-red-400 ml-2">*</span> : ""}
+                {ErrorFeature ? (
+                  <span className="text-red-400 ml-2">*</span>
+                ) : (
+                  ""
+                )}
 
                 <textarea
-                  className={ErrorFeature ? "w-full outline-yellow-300 mt-2 rounded-lg border border-red-200 p-3 text-sm" : "w-full outline-yellow-300 mt-2 rounded-lg border border-gray-200 p-3 text-sm"}
+                  className={
+                    ErrorFeature
+                      ? "w-full outline-yellow-300 mt-2 rounded-lg border border-red-200 p-3 text-sm"
+                      : "w-full outline-yellow-300 mt-2 rounded-lg border border-gray-200 p-3 text-sm"
+                  }
                   placeholder="features"
                   type="text"
                   ref={features}
@@ -271,14 +309,14 @@ export default function AddProduct() {
             </div>
 
             <div className="mt-4">
-              <button
-                type="submit"
-                onClick={handleAddProduct}
-                className="inline-block rounded-lg bg-primary px-5 py-3 font-medium text-white tracking-wider w-full mt-8 hover:bg-yellow-400 hover:scale-105 transition-all"
-              >
-                Ajouter le produit
-              </button>
-            </div>
+                <button
+                  type="submit"
+                  onClick={handleAddProduct}
+                  className="inline-block rounded-lg bg-primary px-5 py-3 font-medium text-white tracking-wider w-full mt-8 hover:bg-yellow-400 hover:scale-105 transition-all duration-700"
+                >
+                  {" "}
+                  Ajouter le produit{" "}
+                </button>    </div>
           </form>
         </div>
       </div>
@@ -287,11 +325,23 @@ export default function AddProduct() {
         <h1 className=" flex items-center text-2xl font-semibold">
           Ajouter des categories{" "}
           <span>
-            <TbLayoutGridAdd className="ml-3" />{" "}
+            <MdAddCircleOutline className="ml-3" />{" "}
           </span>
         </h1>
       </div>
-      {isCategorySent ? <div className="bg-green-100 px-6 py-4 w-full mb-6 rounded flex items-center border border-green-200"> <span className="text-green-600 tracking-wide mr-2">category is added succesfully</span>  <span ><MdDone className="fill-green-600 stroke-green-600 text-2xl"/>  </span>   </div> : ''}
+      {isCategorySent ? (
+        <div className="bg-green-100 px-6 py-4 w-full mb-6 rounded flex items-center border border-green-200">
+          {" "}
+          <span className="text-green-600 tracking-wide mr-2">
+            category is added succesfully
+          </span>{" "}
+          <span>
+            <MdDone className="fill-green-600 stroke-green-600 text-2xl" />{" "}
+          </span>{" "}
+        </div>
+      ) : (
+        ""
+      )}
 
       <div className="bg-gray-100 rounded-[10px] xl:px-14 px-5 py-10 shadow">
         <form action="" className=" space-y-4 ">
@@ -338,7 +388,7 @@ export default function AddProduct() {
             <button
               type="submit"
               onClick={HandleAddCategorie}
-              className="inline-block rounded-lg bg-primary px-5 py-3 font-medium text-white tracking-wider w-full mt-8 hover:bg-yellow-400 hover:scale-105 transition-all"
+              className="inline-block rounded-lg bg-primary px-5 py-3 font-medium text-white tracking-wider w-full mt-8 hover:bg-yellow-400 hover:scale-105 transition-all duration-700"
             >
               Ajouter la categorie
             </button>

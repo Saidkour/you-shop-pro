@@ -81,3 +81,43 @@ export const PostProducts = async (formData) => {
     }
 };
 
+export const EditProduct = async (formData, id) => {
+    try {
+        const response = await fetch(`http://127.0.0.1:8000/api/products/${id}`, {
+            method: "PUT",
+            body: formData,
+        });
+
+        const data = await response.json();
+
+        // Check if the response is not ok
+        if (!response.ok) {
+            throw new Error(data.message || 'Failed to update product');
+        }
+
+        console.log('Updated data:', data);
+        return data;
+
+    } catch (error) {
+        console.error('Error updating product:', error.message);
+        throw error; // Re-throw the error for further handling if needed
+    }
+};
+
+export const DestroyProduct = async (id) => {
+ try {
+  const response = await fetch(`http://127.0.0.1:8000/api/products/${id}`, {
+    method: "delete"
+  });
+
+  const data = await response.json();
+  console.log('the product is deleted ', data);
+  return data;
+
+ } catch (error) {
+  console.log(error.message)
+ }
+}
+
+
+

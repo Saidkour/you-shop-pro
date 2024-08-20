@@ -17,10 +17,13 @@ export default function SideBar() {
               <li className='text-yellow-500 tracking-wider border border-yellow-500 px-2 py-1 mb-3 cursor-pointer hover:border-yellow-600 hover:text-yellow-600 hover:scale-105 transition-all '>Orders</li>
             </Link>
             <Link to={'/dashboard/addProducts'}>
-              <li className='text-yellow-500 tracking-wider border border-yellow-500 px-2 py-1 mb-3 cursor-pointer hover:border-yellow-600 hover:text-yellow-600 hover:scale-105 transition-all '>Add products</li>
+              <li className='text-yellow-500 tracking-wider border border-yellow-500 px-2 py-1 mb-3 cursor-pointer hover:border-yellow-600 hover:text-yellow-600 hover:scale-105 transition-all '>Add products & categories</li>
             </Link>
             <Link to={'/dashboard/productsList'}>
               <li className='text-yellow-500 tracking-wider border border-yellow-500 px-2 py-1 mb-3 cursor-pointer hover:border-yellow-600 hover:text-yellow-600 hover:scale-105 transition-all '>Products</li>
+            </Link>
+            <Link to={'/dashboard/categories'}>
+              <li className='text-yellow-500 tracking-wider border border-yellow-500 px-2 py-1 mb-3 cursor-pointer hover:border-yellow-600 hover:text-yellow-600 hover:scale-105 transition-all '>categories</li>
             </Link>
             <Link to={'/dashboard/feedback'}>
               <li className='text-yellow-500 tracking-wider border border-yellow-500 px-2 py-1 mb-3 cursor-pointer hover:border-yellow-600 hover:text-yellow-600 hover:scale-105 transition-all '>Feedback</li>

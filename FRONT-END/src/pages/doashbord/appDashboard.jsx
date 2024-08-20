@@ -8,6 +8,8 @@ import ProductsList from "../../Components/DashboardComponent/productList";
 import OrderTable from "../../Components/DashboardComponent/OrderTable";
 import OrderDetails from "../../Components/DashboardComponent/orderDetails";
 import ProductDetails from "../../Components/DashboardComponent/productDetails";
+import CategoriesList from "../../Components/DashboardComponent/categoriesList";
+import CategoryDetails from "../../Components/DashboardComponent/categoryDetails";
 
 export default function AppDashboard() {
   return (
@@ -28,6 +30,8 @@ export default function AppDashboard() {
         <Route path="addProducts" element={<AddProduct />} />
         <Route path="productsList" element={<ProductsList />} />
         <Route path="productsList/:id" element={<ProductDetails />} />
+        <Route path="categories" element={<CategoriesList />} />
+        <Route path="categories/:id" element={<CategoryDetails />} />
         <Route path="feedback" element={<FeedBack />} />
       </Route>
       <Route path="*" element={<>check your link 404 route</>} />

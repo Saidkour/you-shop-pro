@@ -40,24 +40,44 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id): JsonResponse
     {
-        //
+        $categories = Category::with('Product')->findOrFail($id);
+        return response()->json($categories);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): JsonResponse
     {
-        //
+        $category = Category::findOrFail($id);
+        
+        $request->validate([
+            "name" => "sometimes|string|unique:categories,name," . $id,
+            "desc" => "sometimes|string"
+        ]);
+    
+        // Log the incoming request data
+        \Log::info('Updating category:', $request->only(['name', 'desc']));
+    
+        $category->update($request->only(['name', 'desc']));
+    
+        return response()->json([
+            "message" => "it is updated",
+            "data" => $category
+        ]);
     }
+    
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): JsonResponse
     {
-        //
+        Category::destroy($id);
+        return response()->json([
+         "message" => "category is deleted !"
+        ]);
     }
 }
