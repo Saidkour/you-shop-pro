@@ -10,7 +10,7 @@ import Checkout from "./Components/Checkout";
 import ViewCarT from "./Components/View_CarT";
 import { Provider } from "react-redux";
 import store from "./redux/store";
-import About from "./pages/about";
+import About from "./pages/About.jsx";
 
 function App() {
   return (
