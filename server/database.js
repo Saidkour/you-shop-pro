@@ -1,7 +1,7 @@
 require("dotenv").config(); // Add this line if you're using a .env file
 const mongoose = require("mongoose");
 
-const uri = process.env.DATABASE;
+const uri = process.env.DATABASE_PROD;
 if (!uri) {
   throw new Error("DATABASE is not set in .env file");
 }
