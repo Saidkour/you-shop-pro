@@ -4,8 +4,15 @@ const orderRouter = require("./routes/order");
 const cors = require("cors");
 const app = express();
 
-app.use(cors({ origin: "https://you-shop-ecom.netlify.app/" }));
+app.use(
+  cors({
+    origin: ["https://you-shop-ecom.netlify.app/"],
+    methods: ["GET", "POST"],
+    credentials: true,
+  })
+);
 app.use(express.json());
+
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
