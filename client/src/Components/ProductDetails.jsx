@@ -24,9 +24,7 @@ function ProductDetails() {
     loading: loading2,
     error: err2,
   } = useFetch(`/products?fields=category,name,price,img&limit=4`);
-
   const list = data2?.products;
-
   const [switchDescRev, setSwitchDescRev] = useState(true);
   const [shouldUpdate, setShouldUpdate] = useState(false);
   const [quantity, setQuantity] = useState(1);
@@ -45,7 +43,7 @@ function ProductDetails() {
       dispatch(updateOrderByValue({ id: details?.id, value: quantity }));
       setShouldUpdate(false);
     }
-  }, [quantity,shouldUpdate, dispatch, details?.id]);
+  }, [quantity, shouldUpdate, dispatch, details?.id]);
 
   const handleClickQuantity = (event) => {
     switch (event.target.name) {

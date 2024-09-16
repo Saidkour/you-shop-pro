@@ -4,14 +4,14 @@ const orderRouter = require("./routes/order");
 const cors = require("cors");
 const app = express();
 
-app.use(cors({ origin: "http://localhost:5173" }));
-
+app.use(cors({ origin: "https://you-shop-ecom.netlify.app/" }));
 app.use(express.json());
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
 
 app.use("/products", productsRouter);
 app.use("/orders", orderRouter);
-
-
 
 app.use((err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
