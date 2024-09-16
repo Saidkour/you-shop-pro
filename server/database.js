@@ -6,7 +6,9 @@ if (!uri) {
   throw new Error("DATABASE is not set in .env file");
 }
 mongoose
-  .connect(uri)
+  .connect(
+    "mongodb+srv://saidkourbisse:uPx2ENOND3bqUmj7@cluster0.3yaac.mongodb.net/"
+  )
   .then(() => {
     console.log(`Database connected`);
   })
