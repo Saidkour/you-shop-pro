@@ -11,20 +11,7 @@ function Checkout() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm({
-    defaultValues: {
-      email: "test@test.com",
-      firstName: "asdf",
-      lastName: "cawe",
-      companyName: "fuckToLIve",
-      country: "morocoo",
-      address: "asd",
-
-      apartment: "as",
-      city: "caew",
-      zip: "asdf",
-      phone: "2398234223",
-      notes: "thanksa oeai oilksanh;",
-    },
+    defaultValues: {},
   });
 
   const orderss = useSelector(orders);
