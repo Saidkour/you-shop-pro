@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { PropTypes } from "prop-types";
+import furnitureStoreAboutProductImg from "../Assets/furniture-store-about-product-img.jpg";
+import AboutFounderImg from "../Assets/about-founder.jpg";
 const CountdownTimer = ({ val }) => {
-  const [count, setCount] = useState(0);
-  useEffect(() => {
+const [count, setCount] = useState(0);
+useEffect(() => {
     const interval = setInterval(() => {
       if (count === val.num) {
         clearInterval(interval);
@@ -44,7 +46,7 @@ function AboutUs() {
                 boxShadow: "16px 24px 80px -16px rgba(0, 0, 0, 0.4)",
               }}
               loading="lazy"
-              src="/furniture-store-about-product-img.jpg"
+              src={furnitureStoreAboutProductImg}
               alt="about-img"
             />
           </div>
@@ -56,7 +58,7 @@ function AboutUs() {
                   boxShadow: "16px 24px 80px -16px rgba(0, 0, 0, 0.4)",
                 }}
                 loading="lazy"
-                src="/public/about-founder.jpg"
+                src={AboutFounderImg}
                 alt="imgfounder"
               />
             </div>

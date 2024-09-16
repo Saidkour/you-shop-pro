@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom";
 import ProductList from "./ProductList";
 import useFetch from "../hocks/useFetch";
+import kitchen from "../Assets/kitchen-bg.jpg";
+import livingRoom from "../Assets/living-room-bg.jpg";
+import bedroom from "../Assets/bedroom-bg.jpg";
+import bathRoom from "../Assets/bath-room-bg.jpg";
+import mainCollection from "../Assets/new-main-collection.jpg";
+
 export default function NewCollection() {
   const {
     data: data2,
@@ -16,7 +22,7 @@ export default function NewCollection() {
         <div className=" w-full lg:w-6/12 xl:w-6/12 md:w-10/12">
           <img
             className="w-full"
-            src="./src/Assets/new-main-collection.jpg"
+            src={mainCollection}
             alt=""
           />
         </div>
@@ -60,7 +66,7 @@ export default function NewCollection() {
         <div className="w-full lg:w-3/12 xl:w-3/12 md:w-6/12 h-[82vh] relative">
           <img
             className="w-full h-full object-cover"
-            src="./src/Assets/living-room-bg.jpg"
+            src={livingRoom}
             alt=""
           />
           <div className="flex  w-auto absolute bottom-9 left-7 z-20">
@@ -88,7 +94,7 @@ export default function NewCollection() {
         <div className="w-full lg:w-3/12 xl:w-3/12 md:w-6/12 h-[82vh] relative">
           <img
             className="w-full h-full object-cover"
-            src="./src/Assets/bedroom-bg.jpg"
+            src={bedroom}
             alt=""
           />
           <div className="flex w-auto absolute bottom-9 left-7 z-20">
@@ -115,11 +121,7 @@ export default function NewCollection() {
         </div>
 
         <div className="w-full lg:w-3/12 xl:w-3/12 md:w-6/12 h-[82vh] relative">
-          <img
-            className="w-full h-full object-cover"
-            src="./src/Assets/kitchen-bg.jpg"
-            alt=""
-          />
+          <img className="w-full h-full object-cover" src={kitchen} alt="" />
           <div className="flex w-auto absolute bottom-9 left-7 z-20">
             <h1 className=" font-bold text-[1.6rem] text-white hover:text-secondary duration-500 ">
               {" "}
@@ -146,7 +148,7 @@ export default function NewCollection() {
         <div className="w-full lg:w-3/12 xl:w-3/12 md:w-6/12  h-[82vh] relative">
           <img
             className="w-full h-full object-cover"
-            src="./src/Assets/bath-room-bg.jpg"
+            src={bathRoom}
             alt=""
           />
           <div className="flex w-auto absolute bottom-9 left-7 z-20">
