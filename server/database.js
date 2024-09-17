@@ -1,7 +1,8 @@
-require("dotenv").config(); // Add this line if you're using a .env file
+require("dotenv").config();
 const mongoose = require("mongoose");
-
-const uri = process.env.DATABASE_PROD;
+const uri =
+  process.env.DATABASE_PROD ||
+  "mongodb+srv://saidkourbisse:uPx2ENOND3bqUmj7@cluster0.3yaac.mongodb.net/?retryWrites=true&w=majority";
 console.log(uri);
 if (!uri) {
   throw new Error("DATABASE is not set in .env file");
@@ -12,5 +13,4 @@ mongoose
     console.log(`Database connected`);
   })
   .catch(() => console.log(`Database not connected`));
-
 module.exports = mongoose;
