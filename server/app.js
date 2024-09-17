@@ -24,6 +24,7 @@ app.use(
     },
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
+    exposedHeaders: ["Access-Control-Allow-Origin"], // Add this line
   })
 );
 app.use(express.json());
