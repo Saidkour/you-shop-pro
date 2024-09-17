@@ -6,7 +6,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["https://you-shop-ecom.netlify.app/"],
+    origin: ["https://you-shop-ecom.netlify.app/","http://localhost:5173"],
     methods: ["GET", "POST"],
     credentials: true,
   })

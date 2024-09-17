@@ -6,6 +6,7 @@ const useFetch = (url) => {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     setLoading("Loading");
+    console.log(`${BASE_URL}${url}`);
     fetch(`${BASE_URL}${url}`)
       .then((res) => {
         if (res.status !== 200)
