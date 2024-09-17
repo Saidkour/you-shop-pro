@@ -4,10 +4,25 @@ const orderRouter = require("./routes/order");
 const cors = require("cors");
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://you-shop-ecom.netlify.app",
+  "https://you-shop-pro.vercel.app",
+];
+
 app.use(
   cors({
-    origin: ["https://you-shop-ecom.netlify.app/","http://localhost:5173"],
-    methods: ["GET", "POST"],
+    origin: function (origin, callback) {
+      // Allow requests with no origin (e.g. mobile apps, curl requests)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const msg =
+          "The CORS policy for this site does not allow access from the specified origin.";
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
