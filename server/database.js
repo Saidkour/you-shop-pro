@@ -1,5 +1,5 @@
-require("dotenv").config();
 const mongoose = require("mongoose");
+require('dotenv').config();
 const uri =
   process.env.DATABASE_PROD ||
   "mongodb+srv://saidkourbisse:uPx2ENOND3bqUmj7@cluster0.3yaac.mongodb.net/?retryWrites=true&w=majority";
