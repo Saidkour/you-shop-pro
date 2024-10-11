@@ -6,7 +6,6 @@ import { BASE_URL } from "../constants";
 import { useDispatch, useSelector } from "react-redux";
 import { setLength, setProducts } from "../redux/reducers/productReducer";
 import { productCategory } from "../redux/selectors";
-
 const SideProductFilters = ({ handleToggleFilters }) => {
   const dispatch = useDispatch();
   const [maxMinPrice, setMaxMinPrice] = useState([20, 37]);
@@ -15,7 +14,6 @@ const SideProductFilters = ({ handleToggleFilters }) => {
     setIsFilterByPrice(true);
   }
   const categories = useSelector(productCategory);
-
   useEffect(() => {
     if (!isfilterbyPrice) return;
     fetch(
@@ -42,7 +40,7 @@ const SideProductFilters = ({ handleToggleFilters }) => {
   useEffect(() => {
     if (!isSearch) return;
     if (search === "") return setIsSearch(false);
-    fetch(`${BASE_URL}/products?~name=${search}&fields=category,name,price,img`)
+    fetch(`${BASE_URL}/products?name=${search}&fields=category,name,price,img`)
       .then((res) => res.json())
       .then(
         (data) =>
@@ -52,9 +50,6 @@ const SideProductFilters = ({ handleToggleFilters }) => {
       .catch((err) => console.log(err));
     setIsSearch(false);
   }, [isSearch, setIsSearch, dispatch, search]);
-  // console.log(categories);
-  //////
-
   return (
     <>
       <div

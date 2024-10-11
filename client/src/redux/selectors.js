@@ -4,3 +4,7 @@ export const allProducts = (state) => state.products.products;
 export const loadingProducts = (state) => state.products.loading;
 export const lengthProducts = (state) => state.products.length;
 export const productCategory = (state) => state.products.categorys;
+export const allOrders = (state) => state.orders.orders;
+export const pendingOrders = (state) => state.orders.PendingOrders;
+export const delivredOrders = (state) => state.orders.DelivredOrders;
+export const getUser = (state) => state.user.user;

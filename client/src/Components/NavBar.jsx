@@ -25,7 +25,7 @@ const NavBar = ({ handleClick }) => {
     setMenuOpen(false);
   }
 
-  const cardOrdersCount = useSelector(orders).length;
+  const cardOrdersCount = useSelector(orders)?.length;
 
   // console.log(cardOrdersCount);
   return (

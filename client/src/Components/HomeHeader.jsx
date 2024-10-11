@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+
+
 function HomeHeader() {
   const scrollDown = () => {
     window.scrollTo({
@@ -35,9 +38,9 @@ function HomeHeader() {
           </div>
           <div>
             <span className="bg-primary mb-3 px-8 py-3 max-w-[150px] hover:bg-semi-white ">
-              <a href="#">
+              <Link to={'/products'}>
                 <span className="font-medium text-semi-black">SHOP NOW</span>
-              </a>
+              </Link>
             </span>
           </div>
           <div className="flex justify-between mt-[100px] sm:mt-[150px] lg:mt-[200px]">

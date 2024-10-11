@@ -1,10 +1,12 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { orders } from "../redux/selectors";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import countryList from "react-select-country-list";
 import { useForm } from "react-hook-form";
 import { BASE_URL } from "../constants";
+import { clearCard } from "../redux/reducers/cardReducer";
 function Checkout() {
+  const dispatch = useDispatch();
   const options = useMemo(() => countryList().getData(), []);
   const {
     register,
@@ -13,16 +15,23 @@ function Checkout() {
   } = useForm({
     defaultValues: {},
   });
-
+  const [isSent, setIsSent] = useState("");
   const orderss = useSelector(orders);
-
   const formSubmit = async (user) => {
     const order = [...orderss].map((ele) => {
-      return { id: ele.id, quantity: ele.quantity };
+      return {
+        id: ele.id,
+        quantity: ele.quantity,
+        totalPrice: ele.quantity * ele.price,
+      };
     });
-    const completeOrder = { user, order };
+    let total = 0;
+    const orderP = order.reduce((total, item) => {
+      return total + item.totalPrice;
+    }, 0);
 
-    // console.log(completeOrder);
+    const completeOrder = { user, order, orderP };
+    console.log(completeOrder);
 
     const result = await fetch(`${BASE_URL}/orders`, {
       headers: {
@@ -31,7 +40,15 @@ function Checkout() {
       method: "POST",
       body: JSON.stringify(completeOrder),
     });
-    console.log(await result.json());
+    if (await result.status) {
+      dispatch(clearCard());
+      document.querySelector("form").reset();
+      setIsSent("Your order has been placed successfully.");
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
   };
 
   // useEffect(() => {
@@ -43,6 +60,9 @@ function Checkout() {
   return (
     <div>
       <div className="bg-gray-50 container lg:px-40 lg:py-8 lg:pb-20 px-8 py-8">
+        <p className="p-2 text-center m-auto max-w-[400px] rounded-md bg-green-500 text-white">
+          {isSent}
+        </p>
         <form
           className="bg-white  lg:grid grid-cols-2  "
           onSubmit={handleSubmit(formSubmit)}
@@ -103,9 +123,6 @@ function Checkout() {
                     errors.country && "border-red-500"
                   }`}
                 >
-                  {/* <option value="" disabled selected>
-                    Country
-                  </option> */}
                   <option value="morocoo">morocoo</option>
                   {options.map((option) => (
                     <option key={option.value} value={option.value}>

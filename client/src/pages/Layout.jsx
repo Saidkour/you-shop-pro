@@ -10,7 +10,6 @@ import { useEffect, useRef } from "react";
 const Layout = () => {
   const { pathname } = useLocation();
   useEffect(() => {
-    console.log("patnamechange", pathname)
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
@@ -18,9 +17,7 @@ const Layout = () => {
   }, [pathname]);
   const dispatch = useDispatch();
   const showSideCard = useSelector(toggleSideCard);
-
   let order = useSelector(orders);
-
   const firstLoad = useRef(true);
   useEffect(() => {
     if (firstLoad.current) {
@@ -31,7 +28,6 @@ const Layout = () => {
       firstLoad.current = false;
     }
   }, [dispatch]);
-
   useEffect(() => {
     window.localStorage.setItem("order", JSON.stringify(order));
   }, [order]);

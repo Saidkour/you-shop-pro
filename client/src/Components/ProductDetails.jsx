@@ -14,37 +14,30 @@ import { orders } from "../redux/selectors";
 function ProductDetails() {
   const { id } = useParams();
   const dispatch = useDispatch();
-  // fetching product details
   const { data, loading, error } = useFetch(`/products/${id}`);
   const details = data?.product?.[0];
   const orderss = useSelector(orders);
-  // fetching the related roducts
   const {
     data: data2,
     loading: loading2,
     error: err2,
-  } = useFetch(`/products?fields=category,name,price,img&limit=4`);
+  } = useFetch(`/products?fields=category,name,price,img&limit=4&category=${details?.category}`);
   const list = data2?.products;
   const [switchDescRev, setSwitchDescRev] = useState(true);
   const [shouldUpdate, setShouldUpdate] = useState(false);
   const [quantity, setQuantity] = useState(1);
-
   const isInCard = orderss.find((ele) => ele.id === details?.id);
-
   const firstLoad = useRef(true);
-
   useEffect(() => {
     if (!isInCard) return;
     setQuantity(orderss.find((ele) => ele.id === details?.id).quantity);
   }, [isInCard, dispatch, details?.id, orderss]);
-
   useEffect(() => {
     if (shouldUpdate) {
       dispatch(updateOrderByValue({ id: details?.id, value: quantity }));
       setShouldUpdate(false);
     }
   }, [quantity, shouldUpdate, dispatch, details?.id]);
-
   const handleClickQuantity = (event) => {
     switch (event.target.name) {
       case "+":
@@ -93,8 +86,8 @@ function ProductDetails() {
   return (
     <>
       <section className="container mt-10">
-        <div className="p-5 lg:flex block justify-between">
-          <div className="lg:max-w-[50%] sm:m-auto max-w-[100%] sm:max-w-[70%] p-2 sm:p-10">
+        <div className="p-5 lg:flex block justify-around">
+          <div className="lg:max-w-[50%] max-w-[100%] sm:max-w-[70%] p-2 sm:p-10">
             <div className="md:p-5">
               <img
                 className="h-full w-full lg:hover:scale-[1.2] "
@@ -326,7 +319,7 @@ function ProductDetails() {
           <div>
             <div className="border p-8">
               <span className="text-semi-black  text-[23px] opacity-[0.8] leading-5 font-medium">
-                Be the first to review “Blue Comfy Fabric Chair”
+                Be the first to review “{details?.name}”
               </span>
               <form className="mt-3" action="">
                 <p className="mb-5">

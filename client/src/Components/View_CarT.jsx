@@ -88,7 +88,7 @@ const OrderItem = ({ order }) => {
     <>
       <tr className=" relative md:grid grid-cols-[1fr_1fr_1fr_1.5fr_1fr] items-center max-h-[100px] justify-between gap-3  w-full mb-[20px] border ">
         <td className="border flex items-center justify-center px-2 py-1  ">
-          <img className="max-h-[100px]" src={order.img} alt={order.name} />
+          <img className="max-h-[100px]" loading="lazy" src={order.img} alt={order.name} />
         </td>
         <td className="px-2 py-1 font-bold max-md:flex justify-between items-center    before:md:hidden before:font-bold before:content-['Product:_'] ">
           <Link to={`/product/${order.id}`} className="hover:text-primary">

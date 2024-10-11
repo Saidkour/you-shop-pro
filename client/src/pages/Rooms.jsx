@@ -10,9 +10,6 @@ const Rooms = () => {
       items: [
         "Massa cras egestas laoreet montes",
         "dapibus eu sit etiam curabitur",
-        "faucibus habitasse lectus vestibulum leo",
-        "odio dolor quis maecenas faucibus vulputate pharetra",
-        "Nulla placerat viverra",
         "Cursus viverra",
         "Vitae interdum eget",
         "Risus tempus elementum",
@@ -21,15 +18,12 @@ const Rooms = () => {
     },
     {
       id: 2,
-      room: "Beth room",
+      room: "Bath room",
       disc: "Massa cras egestas laoreet montes, dapibus eu sit etiam curabitur faucibus habitasse lectus vestibulum leo, odio dolor quis maecenas faucibus vulputate pharetra.",
       img: "bath-room-img.jpg",
       items: [
         "Massa cras egestas laoreet montes",
         "dapibus eu sit etiam curabitur",
-        "faucibus habitasse lectus vestibulum leo",
-        "odio dolor quis maecenas faucibus vulputate pharetra",
-        "Nulla placerat viverra",
         "Cursus viverra",
         "Vitae interdum eget",
         "Risus tempus elementum",
@@ -44,9 +38,6 @@ const Rooms = () => {
       items: [
         "Massa cras egestas laoreet montes",
         "dapibus eu sit etiam curabitur",
-        "faucibus habitasse lectus vestibulum leo",
-        "odio dolor quis maecenas faucibus vulputate pharetra",
-        "Nulla placerat viverra",
         "Cursus viverra",
         "Vitae interdum eget",
         "Risus tempus elementum",
@@ -55,15 +46,12 @@ const Rooms = () => {
     },
     {
       id: 4,
-      room: "kitcheen",
+      room: "Kitchen",
       disc: "Massa cras egestas laoreet montes, dapibus eu sit etiam curabitur faucibus habitasse lectus vestibulum leo, odio dolor quis maecenas faucibus vulputate pharetra.",
       img: "kitchen-img.jpg",
       items: [
         "Massa cras egestas laoreet montes",
         "dapibus eu sit etiam curabitur",
-        "faucibus habitasse lectus vestibulum leo",
-        "odio dolor quis maecenas faucibus vulputate pharetra",
-        "Nulla placerat viverra",
         "Cursus viverra",
         "Vitae interdum eget",
         "Risus tempus elementum",
@@ -77,9 +65,6 @@ const Rooms = () => {
       img: "home-office-img.jpg",
       items: [
         "Massa cras egestas laoreet montes",
-        "dapibus eu sit etiam curabitur",
-        "faucibus habitasse lectus vestibulum leo",
-        "odio dolor quis maecenas faucibus vulputate pharetra",
         "Nulla placerat viverra",
         "Cursus viverra",
         "Vitae interdum eget",

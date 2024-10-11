@@ -1,7 +1,6 @@
 const Product = require("../modules/product");
 const AppError = require("../utils/AppError");
-const productArray = require("../data/db");
-
+// const productArray = require("../data/db");
 exports.getProducts = async (req, res, next) => {
   try {
     const fields = req.query.fields?.split(",").join(" ") ?? {};
@@ -17,7 +16,6 @@ exports.getProducts = async (req, res, next) => {
           '"$1": { "$regex": ".*$2.*", "$options": "i" }'
         )
     );
-
     let query;
     let count;
     if (req.query.sort === "random") {
@@ -57,7 +55,6 @@ exports.getProducts = async (req, res, next) => {
     }
 
     let products = await query;
-    console.log(products);
     res.json({
       status: "success",
       length: count,
@@ -69,12 +66,34 @@ exports.getProducts = async (req, res, next) => {
 };
 
 exports.addManyProducts = async (req, res, next) => {
+  const productArray = req.body;
+  if (!productArray[0].care_instruction || !productArray[0].features) {
+    productArray[0].features = {
+      text: "Ut at ante diam. Vestibulum tincidunt lacus quis odio iaculis, nec iaculis ipsum hendrerit. Curabitur nec fringilla sem. Nullam at diam et ligula tincidunt luctus. Ut fringilla vitae orci eget suscipit. Etiam ultricies justo ac feugiat dignissim.",
+      items: [
+        "Etiam eu tortor tempor, malesuada",
+        " Nunc vitae erat sit amet neque varius consequat",
+        "Lorem ipsum dolor sit amet",
+      ],
+    };
+    productArray[0].care_instruction = {
+      text: "Ut at ante diam. Vestibulum tincidunt lacus quis odio iaculis, nec iaculis ipsum hendrerit.",
+      items: [
+        "Etiam eu tortor tempor, malesuada",
+        "Nunc vitae erat sit amet neque varius consequat",
+        "Vivamus lobortis posuere ante",
+        "Morbi nisi diam, cursus non ultricies",
+        "Lorem ipsum dolor sit amet",
+      ],
+    };
+  }
   try {
     if (!Array.isArray(productArray)) {
       throw new Error("Products data is not an array");
     }
+    console.log(productArray);
 
-    const result =  productArray.map(async (p) => {
+    const result = productArray.map(async (p) => {
       return await Product.create(p);
     });
 
@@ -86,7 +105,6 @@ exports.addManyProducts = async (req, res, next) => {
     next(err);
   }
 };
-
 exports.getOneProduct = async (req, res, next) => {
   try {
     const product = await Product.find({ _id: req.params.id }).select("-__v");

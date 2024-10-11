@@ -12,14 +12,12 @@ export default function WhyChoseUs() {
             <span className="absolute top-[8px] w-[35px] h-[1px] left-0 right-0 bottom-0 bg-primary  "></span>
             IF YOU WONDER
           </span>
-          <h1 className="bold text-[30px] text-black self-start font-medium md:text-[48px] leading-tigh pt-8">
+          <h1 className="bold text-[30px] self-start font-medium md:text-[48px] leading-tigh p-4 text-center sm:text-start">
             Why Choose Us
           </h1>
-
-          <hr className="w-5/6  ms-16 pb-12 lg:ms-28 " />
-          <div className=" ms-16 lg:pb-10 lg:ms-28 lg:flex lg:gap-28">
-            <div>
-              <img src={ic1} alt="Big Discounts" />
+          <div className="  lg:pb-10 px-4 lg:flex lg:gap-28">
+            <div  className="mb-4">
+              <img src={ic1} className=" " alt="Big Discounts" />
               <h5 className="font-semibold  text-xl text-black">
                 Big Discounts
               </h5>
@@ -28,7 +26,7 @@ export default function WhyChoseUs() {
                 orci viverra, cursus justo.
               </p>
             </div>
-            <div>
+            <div className="mb-4">
               <img src={ic2} alt="Big Discounts" />
               <h5 className="font-semibold  text-xl text-black">
                 Big Discounts
@@ -38,7 +36,7 @@ export default function WhyChoseUs() {
                 orci viverra, cursus justo.
               </p>
             </div>
-            <div>
+            <div className="mb-4">
               <img src={ic3} alt="Big Discounts" />
               <h5 className="text-semibold font-semibold  text-xl text-black">
                 Big Discounts
@@ -48,7 +46,7 @@ export default function WhyChoseUs() {
                 orci viverra, cursus justo.
               </p>
             </div>
-            <div>
+            <div className="mb-4">
               <img src={ic4} alt="Big Discounts" />
               <h5 className="text-semibold font-semibold  text-xl text-black">
                 Big Discounts

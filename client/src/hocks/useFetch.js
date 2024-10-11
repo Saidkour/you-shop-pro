@@ -6,8 +6,10 @@ const useFetch = (url) => {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     setLoading("Loading");
-    console.log(`${BASE_URL}${url}`);
-    fetch(`${BASE_URL}${url}`)
+    fetch(`${BASE_URL}${url}`, {
+      method: "GET",
+      credentials: "include",
+    })
       .then((res) => {
         if (res.status !== 200)
           throw new Error(

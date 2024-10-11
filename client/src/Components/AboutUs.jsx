@@ -2,9 +2,12 @@ import { useState, useEffect } from "react";
 import { PropTypes } from "prop-types";
 import furnitureStoreAboutProductImg from "../Assets/furniture-store-about-product-img.jpg";
 import AboutFounderImg from "../Assets/about-founder.jpg";
+
+import { motion } from "framer-motion";
+import { Hidden } from "@mui/material";
 const CountdownTimer = ({ val }) => {
-const [count, setCount] = useState(0);
-useEffect(() => {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
     const interval = setInterval(() => {
       if (count === val.num) {
         clearInterval(interval);
@@ -12,7 +15,6 @@ useEffect(() => {
         setCount((prevCount) => prevCount + 1);
       }
     }, val.duration);
-
     return () => clearInterval(interval);
   }, [count, val]);
 
@@ -85,7 +87,12 @@ function AboutUs() {
             <div className='absolute top-0 left-0 bg-no-repeat w-full h-full xl:bg-fixed bg-[url("/about-big-img.jpg")] opacity-[0.87] bg-contain  md:bg-cover md:bg-center z-[-1]'></div>
             <div className="absolute bg-black  w-full h-full bg-no-repeat xl:bg-fixed left-0 right-0 bottom-0  opacity-[0.47] bg-cover z-[-1] bg-center top-0"></div>
             <div className="max-w-[100%] xl:max-w-[1280px] block mx-auto  pt-[50px]">
-              <div className="block md:flex text-center bg-white mt-[80px] sm:mt-[200px] md:mt-[340px] lg:mt-[500px]">
+              <motion.div
+                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ y: 50, opacity: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                className="block md:flex text-center bg-white mt-[80px] sm:mt-[200px] md:mt-[340px] lg:mt-[500px]"
+              >
                 <div className="md:min-w-[50%] min-w-[100%] flex">
                   <div className="block min-w-[50%] p-5">
                     <p className="font-semibold leading-none text-[32px] md:text-6xl">
@@ -114,7 +121,7 @@ function AboutUs() {
                     <p className="mt-5 text-xs tracking-wider">STORES</p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>
@@ -151,8 +158,13 @@ function AboutUs() {
               </p>
             </div>
           </div>
-          <div className="md:flex block p-2 md:p-10">
-            <div className="md:min-w-[50%] min-w-[100%] p-2">
+          <div className="md:flex overflow-hidden block p-2 md:p-10">
+            <motion.div
+              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ x: -300, opacity: 0 }}
+              transition={{ duration: 0.9, ease: "easeOut" }}
+              className="md:min-w-[50%] min-w-[100%] p-2"
+            >
               <h1 className="font-bold text-[48px] px-5 mb-5">
                 The Best Quality Furniture Store in Town
               </h1>
@@ -224,8 +236,13 @@ function AboutUs() {
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="md:min-w-[50%] min-w-[100%] ">
+            </motion.div>
+            <motion.div
+              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ x: 200, opacity: 0 }}
+              transition={{ duration: 0.9, ease: "easeOut" }}
+              className="md:min-w-[50%] min-w-[100%] "
+            >
               <img
                 className="w-full h-full object-cover"
                 loading="lazy"
@@ -233,7 +250,7 @@ function AboutUs() {
                 src="/about-last-img.jpg"
                 alt="last-img-about"
               />
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>

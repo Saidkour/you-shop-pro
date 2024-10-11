@@ -1,20 +1,5 @@
 export const initialValue = {
-  orders: [
-    // {
-    //   id: 123,
-    //   img: "https://websitedemos.net/home-decor-04/wp-content/uploads/sites/644/2020/08/kitchen-island-set-300x300.png",
-    //   name: "wooden stool",
-    //   price: 50,
-    //   quantity: 3,
-    // },
-    // {
-    //   id: 122,
-    //   img: "https://websitedemos.net/home-decor-04/wp-content/uploads/sites/644/2020/08/king-size-master-bedroom-300x300.png",
-    //   name: "green bedroom swate ",
-    //   price: 100,
-    //   quantity: 1,
-    // },
-  ],
+  orders: [],
   showCard: false,
 };
 
@@ -22,16 +7,16 @@ const cardRedcure = (state = initialValue, action) => {
   switch (action.type) {
     case "toggle_card":
       return { ...state, showCard: !state.showCard };
+    case "clear_card":
+      return { ...state, orders: [] };
     case "update_order": {
       const updatedCmmands = state.orders.map((order) => {
-        // the payload is an object of {type:inc||dec,id}
         if (order.id === action.payload.id) {
           if (action.payload.type === "inc") {
             return { ...order, quantity: ++order.quantity };
           } else if (action.payload.type === "dec") {
             return {
               ...order,
-              // if the quantity is 1 then it will not be decremented
               quantity: order.quantity <= 1 ? 1 : --order.quantity,
             };
           }
@@ -72,6 +57,10 @@ const cardRedcure = (state = initialValue, action) => {
 
 export const toggleCard = (payload) => ({
   type: "toggle_card",
+  payload,
+});
+export const clearCard = (payload) => ({
+  type: "clear_card",
   payload,
 });
 
